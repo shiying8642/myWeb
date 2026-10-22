@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="myWeb — 一個簡潔、溫暖、適合各種裝置瀏覽的響應式網站範例。">
+  <title>myWeb｜讓美好日常慢慢發生</title>
+  <style>
+    :root {
+      --ink: #26352f;
+      --muted: #65736b;
+      --paper: #fbfaf6;
+      --cream: #f0eadf;
+      --green: #526b58;
+      --green-dark: #344d3b;
+      --peach: #e8b99d;
+      --white: #ffffff;
+      --shadow: 0 18px 45px rgba(38, 53, 47, .10);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: 1.7;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(251, 250, 246, .92);
+      border-bottom: 1px solid rgba(38, 53, 47, .08);
+      backdrop-filter: blur(14px);
+    }
+    .nav-wrap {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .logo { font-size: 1.35rem; font-weight: 800; letter-spacing: .04em; }
+    .logo span { color: var(--green); }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { color: var(--muted); font-size: .95rem; transition: color .2s ease; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--green-dark); }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      color: var(--white) !important;
+      background: var(--green);
+    }
+    .menu-toggle {
+      display: none;
+      border: 1px solid #d8ded7;
+      border-radius: 12px;
+      padding: 8px 12px;
+      color: var(--ink);
+      background: var(--white);
+      cursor: pointer;
+    }
+
+    .hero { padding: 70px 0 82px; overflow: hidden; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr .98fr;
+      align-items: center;
+      gap: 58px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 18px;
+      color: var(--green);
+      font-size: .85rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--peach); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 600px;
+      margin-bottom: 22px;
+      font-size: clamp(2.5rem, 5vw, 4.65rem);
+      line-height: 1.18;
+      letter-spacing: -.045em;
+    }
+    h1 em { color: var(--green); font-style: normal; }
+    .hero-copy { max-width: 510px; margin-bottom: 30px; color: var(--muted); font-size: 1.08rem; }
+    .button-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 21px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: var(--white); background: var(--green); }
+    .button-primary:hover { background: var(--green-dark); }
+    .button-secondary { border-color: #d9dfd8; background: transparent; }
+    .hero-visual { position: relative; min-height: 440px; }
+    .hero-photo {
+      position: absolute;
+      inset: 0 22px 18px 36px;
+      width: calc(100% - 58px);
+      height: calc(100% - 18px);
+      object-fit: cover;
+      border-radius: 48% 48% 24px 24px;
+      box-shadow: var(--shadow);
+    }
+    .photo-note {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      max-width: 220px;
+      padding: 18px 20px;
+      border: 1px solid rgba(255,255,255,.8);
+      border-radius: 18px;
+      background: rgba(255,255,255,.92);
+      box-shadow: var(--shadow);
+    }
+    .photo-note strong { display: block; margin-bottom: 4px; }
+    .photo-note span { color: var(--muted); font-size: .88rem; }
+    .decor-circle {
+      position: absolute;
+      top: 12px;
+      left: 0;
+      width: 78px;
+      height: 78px;
+      border: 1px solid #d9c5b5;
+      border-radius: 50%;
+    }
+
+    .section { padding: 82px 0; }
+    .section-heading { max-width: 650px; margin: 0 auto 42px; text-align: center; }
+    .section-heading .eyebrow { justify-content: center; }
+    h2 { margin-bottom: 14px; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.25; letter-spacing: -.035em; }
+    .section-heading p { margin-bottom: 0; color: var(--muted); }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .feature-card {
+      padding: 30px;
+      border: 1px solid #e8e7df;
+      border-radius: var(--radius);
+      background: var(--white);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .feature-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .feature-icon {
+      display: grid;
+      width: 52px;
+      height: 52px;
+      margin-bottom: 22px;
+      place-items: center;
+      border-radius: 16px;
+      background: var(--cream);
+      font-size: 1.5rem;
+    }
+    .feature-card h3 { margin-bottom: 9px; font-size: 1.2rem; }
+    .feature-card p { margin-bottom: 0; color: var(--muted); font-size: .96rem; }
+
+    .gallery-section { background: #f1eee6; }
+    .gallery-grid { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 18px; }
+    .gallery-item { position: relative; min-height: 280px; overflow: hidden; border-radius: 22px; background: #ddd; }
+    .gallery-item:first-child { min-height: 360px; }
+    .gallery-item img { width: 100%; height: 100%; min-height: inherit; object-fit: cover; transition: transform .5s ease; }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .gallery-caption {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      left: 12px;
+      padding: 13px 16px;
+      border-radius: 14px;
+      color: var(--white);
+      background: rgba(26, 38, 31, .65);
+      backdrop-filter: blur(8px);
+    }
+    .gallery-caption strong { display: block; }
+    .gallery-caption span { font-size: .85rem; opacity: .88; }
+
+    .about-grid { display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: 58px; }
+    .about-photo { width: 100%; height: 420px; object-fit: cover; border-radius: var(--radius); }
+    .about-copy p { color: var(--muted); }
+    .quote {
+      margin: 24px 0 0;
+      padding: 18px 22px;
+      border-left: 3px solid var(--peach);
+      color: var(--green-dark);
+      background: #f3efe7;
+      font-size: 1.05rem;
+    }
+
+    .contact { padding: 0 0 82px; }
+    .contact-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 42px;
+      border-radius: 30px;
+      color: var(--white);
+      background: var(--green-dark);
+    }
+    .contact-panel h2 { max-width: 580px; margin-bottom: 10px; }
+    .contact-panel p { margin-bottom: 0; color: #dce5dc; }
+    .contact-panel .button { flex-shrink: 0; color: var(--ink); background: var(--white); }
+
+    footer { padding: 28px 0; border-top: 1px solid #e8e7df; }
+    .footer-wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .footer-wrap p { margin: 0; color: var(--muted); font-size: .88rem; }
+    .back-top { color: var(--green-dark); font-weight: 700; font-size: .9rem; }
+
+    @media (max-width: 800px) {
+      .hero { padding-top: 48px; }
+      .hero-grid, .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .hero-visual { min-height: 390px; }
+      .hero-photo { inset-left: 18px; }
+      .feature-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:first-child { grid-column: 1 / -1; min-height: 320px; }
+      .about-photo { height: 340px; }
+      .contact-panel { align-items: flex-start; flex-direction: column; padding: 32px; }
+    }
+    @media (max-width: 560px) {
+      .container { width: min(100% - 28px, 1120px); }
+      .nav-wrap { min-height: 68px; }
+      .menu-toggle { display: inline-flex; align-items: center; gap: 7px; }
+      .nav-links {
+        position: absolute;
+        top: 68px;
+        right: 14px;
+        left: 14px;
+        display: none;
+        align-items: stretch;
+        flex-direction: column;
+        gap: 0;
+        padding: 10px;
+        border: 1px solid #e7e6de;
+        border-radius: 18px;
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+      .nav-links.is-open { display: flex; }
+      .nav-links a { padding: 12px 14px; }
+      .nav-cta { margin-top: 4px; }
+      .hero { padding: 42px 0 58px; }
+      h1 { font-size: clamp(2.35rem, 12vw, 3.4rem); }
+      .hero-copy { font-size: 1rem; }
+      .hero-visual { min-height: 320px; }
+      .hero-photo { inset: 0 12px 16px 18px; width: calc(100% - 30px); height: calc(100% - 16px); border-radius: 44% 44% 20px 20px; }
+      .decor-circle { width: 52px; height: 52px; }
+      .photo-note { max-width: 185px; padding: 13px 15px; }
+      .section { padding: 60px 0; }
+      .feature-grid, .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item, .gallery-item:first-child { min-height: 270px; grid-column: auto; }
+      .about-photo { height: 280px; }
+      .contact { padding-bottom: 60px; }
+      .contact-panel { padding: 27px 23px; }
+      .footer-wrap { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="logo" href="#home" aria-label="myWeb 首頁">my<span>Web.</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+        <span aria-hidden="true">☰</span> 選單
+      </button>
+      <nav class="nav-links" id="main-nav" aria-label="主要導覽">
+        <a href="#home">首頁</a>
+        <a href="#features">網站特色</a>
+        <a href="#gallery">靈感圖片</a>
+        <a href="#about">關於我們</a>
+        <a class="nav-cta" href="#contact">開始探索</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">A little inspiration every day</p>
+          <h1>讓美好日常<br><em>慢慢發生。</em></h1>
+          <p class="hero-copy">歡迎來到 myWeb。這是一個用簡單設計收藏生活靈感的小角落，讓你在忙碌的日子裡，也能停下腳步，找到自己的節奏。</p>
+          <div class="button-row">
+            <a class="button button-primary" href="#features">探索網站 <span aria-hidden="true">　→</span></a>
+            <a class="button button-secondary" href="#about">認識 myWeb</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="溫暖陽光與咖啡的生活照片">
+          <div class="decor-circle" aria-hidden="true"></div>
+          <img class="hero-photo" src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1100&q=85" alt="陽光灑落在咖啡館桌面與咖啡杯" fetchpriority="high">
+          <div class="photo-note">
+            <strong>慢一點，也很好。</strong>
+            <span>Make room for little joys.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">What you'll find</p>
+          <h2>簡單，卻有自己的溫度</h2>
+          <p>以清楚的內容、舒服的配色和直覺的操作，打造容易瀏覽的網站體驗。</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">☀️</div>
+            <h3>日常靈感</h3>
+            <p>收集生活裡值得留意的小事，為平凡的一天增添一點新鮮感。</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">🌿</div>
+            <h3>清爽設計</h3>
+            <p>使用自然色系、留白和清楚的層次，讓閱讀更輕鬆自在。</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">📱</div>
+            <h3>手機也好看</h3>
+            <p>版面會依照電腦、平板和手機的螢幕寬度自動調整。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section gallery-section" id="gallery">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Little moments</p>
+          <h2>把喜歡的風景收藏起來</h2>
+          <p>這些圖片目前是示範素材，你可以日後換成自己的照片。</p>
+        </div>
+        <div class="gallery-grid">
+          <figure class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=85" alt="桌面上的咖啡與咖啡器具" loading="lazy">
+            <figcaption class="gallery-caption"><strong>一杯咖啡的時間</strong><span>留一點空白給自己</span></figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=850&q=85" alt="陽光穿過綠意盎然的森林" loading="lazy">
+            <figcaption class="gallery-caption"><strong>走進自然</strong><span>讓心情重新充電</span></figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=850&q=85" alt="窗邊桌上的書籍與生活小物" loading="lazy">
+            <figcaption class="gallery-caption"><strong>安靜的午後</strong><span>享受簡單的小事</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <img class="about-photo" src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1000&q=85" alt="咖啡館裡正在準備咖啡的情景" loading="lazy">
+        <div class="about-copy">
+          <p class="eyebrow">About myWeb</p>
+          <h2>這裡是你的<br>數位小天地。</h2>
+          <p>myWeb 是一個簡單的個人網站範例。你可以把它改造成作品集、咖啡廳介紹、甜點展示、個人品牌頁面，或任何你想分享的主題。</p>
+          <p>目前的內容、照片與文字都可以自由替換。先完成第一個版本，再慢慢加入你自己的想法，就是很好的開始。</p>
+          <blockquote class="quote">「不用一次做到完美，只要先開始，就已經往前一步。」</blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="contact-panel">
+          <div>
+            <h2>準備好打造你的第一個網站了嗎？</h2>
+            <p>從一個小小的想法開始，讓它成為可以分享給別人看的網頁。</p>
+          </div>
+          <a class="button" href="https://github.com/" target="_blank" rel="noopener noreferrer">前往 GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-wrap">
+      <a class="logo" href="#home">my<span>Web.</span></a>
+      <p>© <span id="year"></span> myWeb. 用心製作，慢慢成長。</p>
+      <a class="back-top" href="#home">回到頂端 ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    // 自動顯示今年年份
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // 手機版導覽選單：點擊按鈕即可展開或收合
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("is-open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    // 點選導覽連結後，自動收起手機版選單
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  </script>
+</body>
+</html>
