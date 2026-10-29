@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>聯絡我們｜Mellow Coffee</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #3c332d;
+      background: #f8f5f0;
+      line-height: 1.8;
+    }
+
+    header {
+      padding: 20px 8%;
+      background: #fffdf9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    a { color: #655344; }
+
+    .logo {
+      font-size: 23px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 650px;
+      margin: 50px auto;
+      padding: 30px;
+    }
+
+    .panel {
+      padding: 30px;
+      background: white;
+      border-radius: 18px;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      margin-top: 6px;
+      padding: 12px;
+      border: 1px solid #d8cec2;
+      border-radius: 8px;
+      font: inherit;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      border: 0;
+      border-radius: 25px;
+      background: #655344;
+      color: white;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    footer {
+      padding: 24px;
+      text-align: center;
+      background: #3c332d;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      header { flex-direction: column; gap: 10px; }
+      main { margin: 25px auto; padding: 15px; }
+      .panel { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">Mellow Coffee</a>
+    <a href="index.html">返回首頁</a>
+  </header>
+
+  <main>
+    <div class="panel">
+      <h1>聯絡我們</h1>
+      <p>有任何問題或建議，歡迎留下訊息。</p>
+
+      <form id="contactForm">
+        <label for="name">姓名</label>
+        <input id="name" name="name" required>
+
+        <label for="email">電子郵件</label>
+        <input id="email" name="email" type="email" required>
+
+        <label for="message">留言內容</label>
+        <textarea id="message" name="message"
+          rows="5" required></textarea>
+
+        <button type="submit">送出訊息</button>
+      </form>
+
+      <p id="notice" aria-live="polite"></p>
+    </div>
+  </main>
+
+  <footer>© 2026 Mellow Coffee</footer>
+
+  <script>
+    document.getElementById("contactForm")
+      .addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        document.getElementById("notice").textContent =
+          "表單外觀測試成功！目前尚未真正傳送資料。";
+      });
+  </script>
+</body>
+</html>
