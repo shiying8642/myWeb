@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>關於我們｜Mellow Coffee</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #3c332d;
+      background: #f8f5f0;
+      line-height: 1.9;
+    }
+
+    header {
+      padding: 20px 8%;
+      background: #fffdf9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header a {
+      color: #3c332d;
+      text-decoration: none;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 60px auto;
+      padding: 30px;
+    }
+
+    .intro {
+      padding: 45px 30px;
+      background: #e9dfd2;
+      border-radius: 18px;
+      text-align: center;
+    }
+
+    .intro h1 { font-size: 38px; }
+
+    .button {
+      display: inline-block;
+      padding: 10px 25px;
+      margin-top: 15px;
+      background: #655344;
+      color: white;
+      border-radius: 25px;
+      text-decoration: none;
+    }
+
+    footer {
+      padding: 24px;
+      text-align: center;
+      background: #3c332d;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      header { flex-direction: column; gap: 10px; }
+      main { margin: 25px auto; padding: 18px; }
+      .intro h1 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">Mellow Coffee</a>
+    <a href="index.html">返回首頁</a>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p>OUR STORY</p>
+      <h1>關於 Mellow Coffee</h1>
+      <p>讓生活慢一點，讓每一杯咖啡都有溫度。</p>
+    </section>
+
+    <section>
+      <h2>我們的品牌理念</h2>
+      <p>
+        Mellow Coffee 希望為忙碌的日常創造一個舒服、
+        放鬆的角落，讓每位客人都能自在享受咖啡與甜點。
+      </p>
+
+      <h2>我們的用心</h2>
+      <p>
+        從咖啡的香氣到甜點的搭配，
+        我們希望每一次品嚐，都成為生活中的美好時刻。
+      </p>
+
+      <a class="button" href="index.html">回到首頁</a>
+    </section>
+  </main>
+
+  <footer>© 2026 Mellow Coffee</footer>
+</body>
+</html>
